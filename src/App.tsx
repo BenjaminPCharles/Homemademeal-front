@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { Routes, Route, Navigate  } from 'react-router-dom';
 
-// import Home from './views/Home/Home';
-// import Signup from './views/Signup/Signup';
-// import Signin from './views/Signin/Signin';
+import Home from './views/Home/Home';
+import Signup from './views/Signup/Signup';
+import Signin from './views/Signin/Signin';
 import Profile from './views/Profile/Profile';
 
 const Warpper = styled.div `
@@ -18,10 +19,12 @@ const Warpper = styled.div `
 function App() {
   return (
     <Warpper>
-      {/* <Home /> */}
-      {/* <Signup /> */}
-      {/* <Signin /> */}
-      <Profile />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
     </Warpper>
   )
 };

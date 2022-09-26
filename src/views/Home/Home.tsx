@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Button from '../../components/Button/Button';
 
@@ -36,6 +37,12 @@ const BtnNav = styled.div `
     margin: 1em 0;
 `;
 
+const StyledLink = styled(Link) `
+    textDecoration: none;
+    color: #BEBEBE;
+    width: 100vw;
+    display: contents;
+`
 
 function Home() {
 
@@ -47,8 +54,12 @@ function Home() {
             HomeMadeMeal a été pensé pour vous aider au quotidien. Ici, vous pourrez garder vos recettes et enregistrer les ingrédients qui se trouvent dans votre frigo, nous nous chargerons de vous dire ce que vous pouvez cuisiner aujourd'hui. On vous évite de vous poser cette fameuse question :  "que mangeons-nous ce soir ?" 
         </Text>
         <BtnNav>
-            <Button text={"Se connecter"} />
-            <Button text={"Inscription"} /> 
+            <StyledLink to="/signin">
+                <Button text={"Se connecter"}/>
+            </StyledLink>
+            <StyledLink to="/signup">
+                <Button text={"Inscription"} /> 
+            </StyledLink>
         </BtnNav>
     </Warpper>
   )

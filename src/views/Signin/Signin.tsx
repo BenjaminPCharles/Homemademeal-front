@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
-
+import ButtonGoogle from '../../components/ButtonGoogle/ButtonGoogle';
 
 const Warpper = styled.div `
   height: 100vh;
@@ -16,7 +16,7 @@ const Warpper = styled.div `
   form {
     display: flex;
     flex-direction: column;
-    margin: 5em 0 3em 0;
+    margin: 3em 0 3em 0;
   }
 
   input {
@@ -32,6 +32,7 @@ function Signin({text}: any | string) {
   return (
     <Warpper>
       <Header />
+      <ButtonGoogle text={'Connection'} />
       <form>
         <input type="email" name="" placeholder='Mail'/>
         <input type="password" name="" placeholder='Mot de passe'/>
