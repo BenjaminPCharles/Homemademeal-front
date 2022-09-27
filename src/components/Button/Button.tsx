@@ -1,31 +1,31 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
-function Button({text}: any & String) {
+function Button({text, type}: any | String | Boolean) {
 
-  const [isClicked, setIsClicked] = useState(true);
+  const Warpper = styled.button `
+      border: none;
+      text-align: center;
+      width: 90%;
+      padding: .8em 3em;
+      margin: 1em 0;
+      color: #fff;
+      background-color: #078080;
+      box-shadow: 2px 2px 6px #232323;
+      border-radius: 25px;
 
-  const Warpper = styled.div `
-    text-align: center;
-    width: 45%;
-    padding: .8em 2em;
-    margin: 1em 0;
-    color: #fff;
-    background-color: #078080;
-    box-shadow: ${isClicked ? "2px 2px 6px #232323": "inset 2px 2px 6px #232323"};
-    border-radius: 25px;
+      font-family: 'Impact', sans-serif;
+      font-size: 1.1em;
 
-    font-family: 'Impact', sans-serif;
+      :active {
+        box-shadow:inset 2px 2px 6px #232323;
+      }
   `;
-
-  const handleClick = () => {
-    setIsClicked(!isClicked)
-  }
-
+  
   return (
-    <Warpper onClick={handleClick}>
-      {text}
-    </Warpper>
+   <Warpper type={type}>
+    { text }
+   </Warpper>
   )
 };
 

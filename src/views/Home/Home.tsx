@@ -30,7 +30,7 @@ const Text = styled.div `
 `;
 
 const BtnNav = styled.div `
-    width: 100%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,7 +40,6 @@ const BtnNav = styled.div `
 const StyledLink = styled(Link) `
     textDecoration: none;
     color: #BEBEBE;
-    width: 100vw;
     display: contents;
 `
 
