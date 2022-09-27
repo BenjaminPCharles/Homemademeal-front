@@ -6,6 +6,7 @@ import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import ButtonGoogle from '../../components/ButtonGoogle/ButtonGoogle';
 
+
 const Warpper = styled.div `
   height: 100vh;
   width: 100vw;
