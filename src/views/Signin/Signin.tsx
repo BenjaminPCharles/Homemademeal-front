@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from "react-hook-form";
+import { Navigate } from 'react-router-dom'
+
+import { requestsLogin } from '../../requests/userRequests';
 
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import ButtonGoogle from '../../components/ButtonGoogle/ButtonGoogle';
 
+
+interface SignInData {
+  sendUserInfo: boolean | undefined;
+}
 
 const Warpper = styled.div `
   height: 100vh;
@@ -36,9 +43,29 @@ const Warpper = styled.div `
 function Signin() {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const [ signInData, setSignInData ] = useState<SignInData>({
+    sendUserInfo: undefined,
+  })
+
+  const signinRequest = async(email: string, password: string) => {
+    try {
+      const result = await requestsLogin(email, password);
+      if(result){
+        setSignInData({
+          sendUserInfo: true,
+        });
+      } else {
+        setSignInData({
+          sendUserInfo: false,
+        });
+      }
+    }catch(err) {
+      console.error(err)
+    }
+  }
 
   const onSubmit = (data: any) => {
-    console.log(data)
+    signinRequest(data.email, data.password)
   };
 
   return (
@@ -52,6 +79,9 @@ function Signin() {
         {errors.password && <span>Vous devez entrer un mot de passe</span>}
         <Button text={"Connection"} />
       </form>
+      {signInData.sendUserInfo === false ? <span>Vous devez vous inscrire ou confimer votre compte regardez dans votre boite mail</span> : null}
+      {signInData.sendUserInfo && (
+          <Navigate to="/profile" replace={true} />)} 
     </Warpper>
   )
 }

@@ -16,6 +16,9 @@ const GlobalStyle = createGlobalStyle`
   input:focus {
     outline: none;
   }
+  ul {
+    list-style-type: none;
+  }
 `;
  
 export default GlobalStyle;

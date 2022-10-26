@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {JSXElementConstructor, useState} from 'react';
 import styled from 'styled-components';
+import { JsxElement } from 'typescript';
 
-function Button({text, type}: any | String | Boolean) {
+function Button({text, type}: any | String | Boolean){
 
   const Warpper = styled.button `
       border: none;
@@ -23,7 +24,7 @@ function Button({text, type}: any | String | Boolean) {
   `;
   
   return (
-   <Warpper type={type}>
+   <Warpper type={type} data-testid={"button"}>
     { text }
    </Warpper>
   )

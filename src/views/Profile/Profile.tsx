@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
+import PaginationSection from '../../components/PaginationSection/PaginationSection';
 
 
 const Warpper = styled.div `
@@ -35,21 +36,21 @@ const Info = styled.div `
   }
 `;
 
-const Receipt = styled.div `
-  text-align: center;
+// const Receipt = styled.div `
+//   text-align: center;
 
-  p {
-    font-size: 1.3em;
-    margin-bottom: .5em;
-  }
+//   p {
+//     font-size: 1.3em;
+//     margin-bottom: .5em;
+//   }
 
-  section {
-    width: 80vw;
-    height: 10em;
-    background-color: #fff;
-    border: solid 3px #232323;
-  }
-`;
+//   section {
+//     width: 80vw;
+//     height: 10em;
+//     background-color: #fff;
+//     border: solid 3px #232323;
+//   }
+// `;
 
 function Profile({text}: any | string) {
 
@@ -61,10 +62,11 @@ function Profile({text}: any | string) {
         <img src="../public/img/pp.png" alt="" />
         <p>Modifier vos informations</p>
       </Info>
-      <Receipt>
+      <PaginationSection text={["Vos recettes favorites", ""]}/>
+      {/* <Receipt>
         <p>Vos recettes favorites</p>
         <section></section>
-      </Receipt>
+      </Receipt> */}
       <Navigation />
     </Warpper>
   )
