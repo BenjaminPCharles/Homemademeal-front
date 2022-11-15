@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../Button/Button';
-import Link from '../Link/Link';
+import LinkShow from '../LinkShow/LinkShow';
 
 const Warpper = styled.form `
     width: 80vw;
@@ -35,7 +35,7 @@ const Warpper = styled.form `
     }
 `;
 
-function DetailsIngredient({clicked, setClicked}: any | boolean | string) {
+function AddIngredient({clicked, setClicked}: any | boolean | string) {
     return (
         <Warpper>
             <input type="text" name="" id="" placeholder="Nom de l'ingrédient"/>
@@ -48,9 +48,9 @@ function DetailsIngredient({clicked, setClicked}: any | boolean | string) {
                 <option value="">ml</option>
             </select>
             <Button text={"Ajouter l'ingrédient"} />
-            <Link text={"Retour"} clicked={clicked} setClicked={setClicked} />
+            <LinkShow text={"Retour"} clicked={clicked} setClicked={setClicked} />
         </Warpper>
     )
 }
 
-export default React.memo(DetailsIngredient);
+export default React.memo(AddIngredient);

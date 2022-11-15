@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
 import PaginationSection from '../../components/PaginationSection/PaginationSection';
+import LinkShow from '../../components/LinkShow/LinkShow';
+import UserInput from '../../components/UserInput/UserInput';
+
+import { requestAuthorize } from '../../requests/userRequests';
 
 
 const Warpper = styled.div `
@@ -14,6 +18,9 @@ const Warpper = styled.div `
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  p {
+    font-size: 1.3em;
+  }
 `;
 
 const Info = styled.div `
@@ -22,51 +29,54 @@ const Info = styled.div `
   align-items: center;
 
   h1 {
-    font-size: 1.3em;
+    font-size: 1.5em;
     font-weight: 400;
+    margin: 0 0 3em 0;
   }
   img {
     margin: 2em 0 1.5em 0;
   }
   p {
-    font-size: 1.1em;
-    font-style: italic;
-    color: #078080;
+    font-size: 1.3em;
     cursor: pointer;
   }
 `;
 
-// const Receipt = styled.div `
-//   text-align: center;
-
-//   p {
-//     font-size: 1.3em;
-//     margin-bottom: .5em;
-//   }
-
-//   section {
-//     width: 80vw;
-//     height: 10em;
-//     background-color: #fff;
-//     border: solid 3px #232323;
-//   }
-// `;
-
 function Profile({text}: any | string) {
+
+  const [showModifyProfile, setShowModifyProfile] = useState(true);
+  const [userName, setUserName] = useState('');
+
+
+  const requestInfo = async () => {
+    try {
+      const auth = await requestAuthorize();
+      setUserName(auth.firstName);
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(()=> {
+    requestInfo();
+  }, [showModifyProfile])
+
 
   return (
     <Warpper>
       <Header />
       <Info>
-        <h1>Bonjour Benjamin</h1>
-        <img src="../public/img/pp.png" alt="" />
-        <p>Modifier vos informations</p>
+        <h1>Bonjour {userName === "" ? "toi !" : userName + " !"}</h1>
+        {/* <img src="../public/img/pp.png" alt="" /> */}
+        <LinkShow text={"Modifier vos informations"} color={"078080"} setClicked={setShowModifyProfile} clicked={showModifyProfile}/>
       </Info>
-      <PaginationSection text={["Vos recettes favorites", ""]}/>
-      {/* <Receipt>
-        <p>Vos recettes favorites</p>
-        <section></section>
-      </Receipt> */}
+      {
+        !showModifyProfile ? 
+        <UserInput setClicked={setShowModifyProfile} clicked={showModifyProfile} setUserName={setUserName} /> : 
+        null
+      }
+      <PaginationSection text={["Vos recettes favorites"]}/>
+      <LinkShow text={"Déconnexion"} color={"078080"} />
       <Navigation />
     </Warpper>
   )

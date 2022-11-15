@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5789',
+    baseURL: 'http://localhost:5789'
 })
 
 // Sign up Request
@@ -36,10 +36,43 @@ export async function requestsLogin(email: string, password: string) {
         const result = await axiosInstance.post('/api/v1/login', {
             email: email,
             password: password,
-        });
-        // console.log(result)
+        }, {withCredentials: true}
+        );
+        console.log(result)
+        console.log(result.data)
         return result.data;
     }catch(err) {
         console.error(err);
+    }
+}
+
+
+
+// Check autorization user
+export async function requestAuthorize() {
+    try {
+        const result = await axiosInstance.get('/api/v1/secure', {withCredentials: true});
+        console.log(result.data)
+        return result.data;
+    }catch(err){
+        console.error(err)
+    }
+}
+
+// Modify user informations
+
+
+export async function modifyUser(firstName: string, secondName: string, password: string, id: number) {
+    try {
+        const result = await axiosInstance.patch(`/api/v1/user/${id}`, {
+            firstName: firstName,
+            secondName: secondName,
+            password: password,
+        }, {withCredentials: true}
+        );
+        console.log(result.data)
+        return result.data;
+    }catch(err){
+        console.error(err)
     }
 }

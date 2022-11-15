@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import NavButton from '../NavButton/NavButton';
 
@@ -26,9 +26,9 @@ function Navigation() {
   return (
     <Warpper>
       <Images>
-        <NavButton text={"ingredient"} />
-        <NavButton text={"profil"} />
-        <NavButton text={"receipt"} />
+        <NavButton text={"profile"} />
+        <NavButton text={"receipts"} />
+        <NavButton text={"ingredients"} />
         <NavButton text={"search"} />
       </Images>
       <Background></Background>

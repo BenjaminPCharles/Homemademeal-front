@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 
 
-function NavButton({text}: any | string) {
+function NavButton({text}: any | string ) {
 
-  const [isClicked, setIsClicked] = useState(true);
-
-  const Warpper = styled.div `
+  const Warpper = styled(NavLink) `
   border-radius: 50%;
   width: 3.5em;
   height: 3.5em;
   margin: 1em .7em;
-  box-shadow: ${isClicked ? "2px 2px 6px #232323": "inset 2px 2px 6px #232323"};
   border: 3px solid #232323;
+  box-shadow: 2px 2px 6px #232323;
 
   background-image: url(../public/img/${text}.png);
   background-position: center;
 
+  &.active {
+    box-shadow: inset 2px 2px 6px #232323;
+  }
+
 `;
 
-  const handleClick = () => {
-    setIsClicked(!isClicked)
-  };
 
   return (
-    <Warpper onClick={handleClick}></Warpper>
+    <Warpper to={`/${text}`}></Warpper>
   )
 }
 

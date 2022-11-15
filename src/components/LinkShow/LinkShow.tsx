@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const Warpper = styled.p ``;
 
-function Link({text, clicked, setClicked}: any | string | boolean){
+
+function LinkShow({text, clicked, setClicked, color}: any | string | boolean){
+
+    const Warpper = styled.p `
+        color: #${color};
+        cursor: pointer;
+    `;
 
     const handleClick = () => {
         setClicked(!clicked);
@@ -16,4 +21,4 @@ function Link({text, clicked, setClicked}: any | string | boolean){
     )
 }
 
-export default React.memo(Link);
+export default React.memo(LinkShow);

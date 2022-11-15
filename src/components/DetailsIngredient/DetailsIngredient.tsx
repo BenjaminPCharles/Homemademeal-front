@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-import Link from '../Link/Link';
+import LinkShow from '../LinkShow/LinkShow';
 
 const Warpper = styled.nav `
     width: 80vw;
@@ -41,9 +41,6 @@ const Warpper = styled.nav `
                 margin: .3em 0 .3em 0;
             }
         }
-        li:first-child {
-            color: #078080;
-        }
         li:not(:first-child):not(:last-child) {
             color: #e16162;
             margin-bottom: 1em;
@@ -60,9 +57,9 @@ function DetailsIngredient({clickedReturn, setClickedReturn, clickedModify, setC
             </ul>
             <nav>
                 <ol>
-                    <li><Link text={"Modifier l'ingrédient"} clicked={clickedModify} setClicked={setClickedModify} /></li>
+                    <li><LinkShow text={"Modifier l'ingrédient"} clicked={clickedModify} setClicked={setClickedModify} color={"078080"}/></li>
                     <li><p>Supprimer l'ingrédient</p></li>
-                    <li><Link text={"Retour"} clicked={clickedReturn} setClicked={setClickedReturn} /></li>
+                    <li><LinkShow text={"Retour"} clicked={clickedReturn} setClicked={setClickedReturn} /></li>
                 </ol>
             </nav>
         </Warpper>

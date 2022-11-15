@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
-import Link from '../../components/Link/Link';
+import LinkShow from '../../components/LinkShow/LinkShow';
 import PaginationSection from '../../components/PaginationSection/PaginationSection';
+import ReceiptInput from '../../components/ReceiptInput/ReceiptInput';
 
 const Warpper = styled.div `
     width: 100vw;
@@ -40,16 +41,22 @@ const Warpper = styled.div `
 
 
 function Receipts(){
+
+    const [showAddReceipt, setShowAddReceipt] = useState(true);
+
     return (
         <Warpper>
             <Header />
-            <main>
-                <h1>Recettes</h1>
-                <PaginationSection text={["",""]}/>
-                {/* Rajouter props color Link */}
-                <Link text={"Rechercher une recette"} />
-                <Link text={"Ajouter une recette"} />
-            </main>
+            {showAddReceipt ?
+                <main>
+                    <h1>Recettes</h1>
+                    <PaginationSection text={["",""]} receipts={true} />
+                    {/* Rajouter props color Link */}
+                    <LinkShow text={"Rechercher une recette"} color={"078080"} />
+                    <LinkShow text={"Ajouter une recette"} color={"078080"} clicked={showAddReceipt} setClicked={setShowAddReceipt} />
+                </main> :
+                <ReceiptInput clicked={showAddReceipt} setClicked={setShowAddReceipt} />
+            }
             <Navigation />
         </Warpper>
     )

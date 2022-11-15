@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useForm } from "react-hook-form";
 import { Navigate } from 'react-router-dom'
 
-import { requestsLogin } from '../../requests/userRequests';
+import { requestsLogin, requestAuthorize } from '../../requests/userRequests';
 
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
@@ -51,13 +51,16 @@ function Signin() {
     try {
       const result = await requestsLogin(email, password);
       if(result){
-        setSignInData({
-          sendUserInfo: true,
-        });
-      } else {
-        setSignInData({
-          sendUserInfo: false,
-        });
+        // const auth = await requestAuthorize();
+        // if(auth){
+          setSignInData({
+            sendUserInfo: true,
+          });
+        } else {
+          setSignInData({
+            sendUserInfo: false,
+          });
+        // } 
       }
     }catch(err) {
       console.error(err)

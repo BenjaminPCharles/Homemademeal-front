@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
 import DetailsIngredient from '../../components/DetailsIngredient/DetailsIngredient';
 import AddIngredient from '../../components/AddIngredient/AddIngredient';
-import Link from '../../components/Link/Link';
+import LinkShow from '../../components/LinkShow/LinkShow';
 
 const Warpper = styled.div `
     width: 100vw;
@@ -37,6 +37,7 @@ const List = styled.nav `
         display: flex;
         p {
             width : 60vw;
+            cursor: pointer;
         }
         aside {
             color: #e16162;
@@ -55,11 +56,6 @@ function Ingredients(){
         setIngredientName(e.target.innerText)
     };
 
-    const addHandleClick = () => {
-        console.log("lfj,dsmlfjsd")
-        setAddIsClicked(!addIsClicked);
-    };
-
     const ingredients: string[] = ['poivre noir', 'salade', 'poulet','oeufs', 'salade', 'poulet','oeufs', 'salade', 'poulet','oeufs', 'salade', 'poulet','poivre noir', 'salade', 'poulet','oeufs', 'salade', 'poulet','oeufs', 'salade', 'poulet','oeufs', 'salade', 'poulet'];
 
     return (
@@ -74,7 +70,7 @@ function Ingredients(){
                 })}
             </List>
             {!isClicked ? <DetailsIngredient clickedReturn={isClicked} setClickedReturn={setIsClicked} clickedModify={addIsClicked} setClickedModify={setAddIsClicked} name={ingredientName}/> : undefined}
-            <Link clicked={addIsClicked} setClicked={setAddIsClicked} text={"Ajouter un ingrédient"} />
+            <LinkShow clicked={addIsClicked} setClicked={setAddIsClicked} text={"Ajouter un ingrédient"} color={"078080"}/>
             {!addIsClicked ? <AddIngredient clicked={addIsClicked} setClicked={setAddIsClicked}/> : undefined}
             <Navigation />
         </Warpper>
