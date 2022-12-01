@@ -14,7 +14,7 @@ function Header({text}: any | string) {
 
   return (
     <Warpper>
-        <img src="../public/img/logo-small.png" alt="" />
+        <img src="../img/logo-small.png" alt="" />
     </Warpper>
   )
 }

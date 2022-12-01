@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Navigate } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -45,7 +46,7 @@ const List = styled.nav `
     }
 `;
 
-function Ingredients(){
+function Ingredients({userInfos}: any | string){
 
     const [isClicked, setIsClicked] = useState(true);
     const [addIsClicked, setAddIsClicked] = useState(true);
@@ -73,6 +74,7 @@ function Ingredients(){
             <LinkShow clicked={addIsClicked} setClicked={setAddIsClicked} text={"Ajouter un ingrédient"} color={"078080"}/>
             {!addIsClicked ? <AddIngredient clicked={addIsClicked} setClicked={setAddIsClicked}/> : undefined}
             <Navigation />
+            {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
         </Warpper>
     )
 };

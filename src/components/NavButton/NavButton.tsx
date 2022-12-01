@@ -14,7 +14,7 @@ function NavButton({text}: any | string ) {
   border: 3px solid #232323;
   box-shadow: 2px 2px 6px #232323;
 
-  background-image: url(../public/img/${text}.png);
+  background-image: url(../img/${text}.png);
   background-position: center;
 
   &.active {

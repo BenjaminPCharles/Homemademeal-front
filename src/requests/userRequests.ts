@@ -4,6 +4,19 @@ const axiosInstance = axios.create({
     baseURL: 'http://localhost:5789'
 })
 
+// Google auth
+
+export async function requestGoogleAuth() {
+    try {
+        const result = await axiosInstance.get('/auth/google', {withCredentials: true});
+        console.log(result.data)
+        return result.data;
+    }catch(err){
+        console.error(err)
+    }
+}
+
+
 // Sign up Request
 export async function requestsAddUsers(email: string, password: string) {
     console.log(email, password)
@@ -70,6 +83,39 @@ export async function modifyUser(firstName: string, secondName: string, password
             password: password,
         }, {withCredentials: true}
         );
+        console.log(result.data)
+        return result.data;
+    }catch(err){
+        console.error(err)
+    }
+}
+
+
+
+
+// Logout user
+
+
+export async function requestLogout() {
+    try {
+        const result = await axiosInstance.get(`/api/v1/logout`, {withCredentials: true}
+        );
+        console.log(result.data)
+        return result.data;
+    }catch(err){
+        console.error(err)
+    }
+}
+
+
+
+
+
+// TEST 
+
+export async function requestAuthGoogle() {
+    try {
+        const result = await axiosInstance.get('/google/login', {withCredentials: true});
         console.log(result.data)
         return result.data;
     }catch(err){

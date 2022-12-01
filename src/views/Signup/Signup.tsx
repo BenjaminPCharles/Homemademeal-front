@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from "react-hook-form";
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
 
 import { requestsAddUsers } from '../../requests/userRequests';
 
@@ -44,7 +44,7 @@ const Warpper = styled.div `
   }
 `;
 
-function Signup(){
+function Signup({userInfos}: any | string){
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [signUpData, setSignUpData] = useState<SignUpData>({
@@ -134,6 +134,7 @@ function Signup(){
       {signUpData.sendUserInfo === false ? <span>Vous êtes déjà inscrit vous pouvez vous connecter</span> : undefined}
       {signUpData.sendUserInfo && (
           <Navigate to="/" replace={true} />)} 
+       {userInfos === 'authenticated' ? ( <Navigate to='/profile' replace />) : undefined}
     </Warpper>
   )
 }

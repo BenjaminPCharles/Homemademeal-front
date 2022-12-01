@@ -1,5 +1,7 @@
-import React, {ReactComponentElement, useState} from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components';
+
+import { requestGoogleAuth } from "../../requests/userRequests";
 
 function ButtonGoogle({text}: any & String) {
 
@@ -23,8 +25,18 @@ function ButtonGoogle({text}: any & String) {
     }
   `;
 
+  // const googleAuth = async() => {
+  //   try {
+  //     await requestGoogleAuth()
+  //   } catch(err){
+  //     console.error(err)
+  //   }
+  // }
+
   const handleClick = ({text}: any & String) => {
     setIsClicked(!isClicked)
+    // googleAuth();
+    window.open("http://localhost:5789/auth/google")
   }
 
   return (

@@ -6,8 +6,10 @@ import Navigation from '../../components/Navigation/Navigation';
 import PaginationSection from '../../components/PaginationSection/PaginationSection';
 import LinkShow from '../../components/LinkShow/LinkShow';
 import UserInput from '../../components/UserInput/UserInput';
+import Logout from '../../components/Logout/Logout';
 
-import { requestAuthorize } from '../../requests/userRequests';
+import { requestAuthorize, requestAuthGoogle } from '../../requests/userRequests';
+import { Navigate } from 'react-router-dom';
 
 
 const Warpper = styled.div `
@@ -42,11 +44,12 @@ const Info = styled.div `
   }
 `;
 
-function Profile({text}: any | string) {
+function Profile({userInfos, setUserInfos}: any | string ) {
 
   const [showModifyProfile, setShowModifyProfile] = useState(true);
   const [userName, setUserName] = useState('');
 
+  //EVITER DE CHARGER AUTH 
 
   const requestInfo = async () => {
     try {
@@ -76,9 +79,13 @@ function Profile({text}: any | string) {
         null
       }
       <PaginationSection text={["Vos recettes favorites"]}/>
-      <LinkShow text={"Déconnexion"} color={"078080"} />
+      <Logout text={"Déconnexion"} color={"078080"} setUserInfos={setUserInfos} />
       <Navigation />
+
+      {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
+      
     </Warpper>
+    
   )
 }
 

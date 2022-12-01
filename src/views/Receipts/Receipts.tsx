@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Navigate } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -40,7 +41,7 @@ const Warpper = styled.div `
 `;
 
 
-function Receipts(){
+function Receipts({userInfos}: any | string){
 
     const [showAddReceipt, setShowAddReceipt] = useState(true);
 
@@ -58,6 +59,7 @@ function Receipts(){
                 <ReceiptInput clicked={showAddReceipt} setClicked={setShowAddReceipt} />
             }
             <Navigation />
+            {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
         </Warpper>
     )
 };

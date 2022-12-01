@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from "react-hook-form";
 import { Navigate } from 'react-router-dom'
@@ -40,7 +40,7 @@ const Warpper = styled.div `
   }
 `;
 
-function Signin() {
+function Signin({userInfos, setUserInfos}: any | string) {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [ signInData, setSignInData ] = useState<SignInData>({
@@ -49,10 +49,16 @@ function Signin() {
 
   const signinRequest = async(email: string, password: string) => {
     try {
+      setUserInfos({
+        isConnect : 'checking'
+      })
       const result = await requestsLogin(email, password);
       if(result){
         // const auth = await requestAuthorize();
         // if(auth){
+          setUserInfos({
+            isConnect : 'authenticated'
+          })
           setSignInData({
             sendUserInfo: true,
           });
@@ -83,8 +89,9 @@ function Signin() {
         <Button text={"Connection"} />
       </form>
       {signInData.sendUserInfo === false ? <span>Vous devez vous inscrire ou confimer votre compte regardez dans votre boite mail</span> : null}
-      {signInData.sendUserInfo && (
-          <Navigate to="/profile" replace={true} />)} 
+      {/* {signInData.sendUserInfo && (
+          <Navigate to='/profile' replace />)}  */}
+      {userInfos === 'authenticated' ? ( <Navigate to='/profile' replace />) : undefined}
     </Warpper>
   )
 }
