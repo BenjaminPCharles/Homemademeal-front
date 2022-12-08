@@ -1,35 +1,23 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-import { requestLogout } from '../../requests/userRequests';
+import { logout } from '../../features/user/userAction';
+import { useAppDispatch } from '../../app/store';
 
+function Logout({text, color}: any | string | boolean){
 
-function Logout({text, color, setUserInfos}: any | string | boolean){
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const Warpper = styled.p `
         color: #${color};
         cursor: pointer;
     `;
 
-    const requestToLogout = async () => {
-        try {
-          await requestLogout();
-        }catch(err) {
-          console.error(err);
-        }
-    }
-
-    const navigate = useNavigate();
-
     const handleClick = () => {
-        requestToLogout();
-        setUserInfos({
-            isConnect : 'no-authenticated',
-            id : undefined,
-            firstName : undefined
-          })
-        navigate('/')
+        dispatch(logout());
+        navigate('/');
     }
 
     return (

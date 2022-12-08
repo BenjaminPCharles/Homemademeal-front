@@ -25,6 +25,7 @@ export async function requestsAddUsers(email: string, password: string) {
             email: email,
             password: password,
         });
+        console.log(result)
         return result.data;
     }catch(err) {
         console.error(err);
@@ -52,7 +53,6 @@ export async function requestsLogin(email: string, password: string) {
         }, {withCredentials: true}
         );
         console.log(result)
-        console.log(result.data)
         return result.data;
     }catch(err) {
         console.error(err);
@@ -68,7 +68,8 @@ export async function requestAuthorize() {
         console.log(result.data)
         return result.data;
     }catch(err){
-        console.error(err)
+        return "not-auth"
+        // console.error(err)
     }
 }
 

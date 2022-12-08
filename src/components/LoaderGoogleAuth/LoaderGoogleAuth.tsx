@@ -48,10 +48,10 @@ function loaderGoogleAuth(){
 
     const [redirect, setRedirect] = useState(false)
 
-    const test = async () => {
+    const googleAuth = async () => {
         try {
-            const connecGoogle = await requestAuthGoogle()
-            if(connecGoogle){
+            const connectionGoogle = await requestAuthGoogle()
+            if(connectionGoogle){
                 setRedirect(true)
             }
         }catch(err){
@@ -60,7 +60,7 @@ function loaderGoogleAuth(){
     }
 
     useEffect(() => {
-        test()
+        googleAuth()
     }, [])
 
     return (

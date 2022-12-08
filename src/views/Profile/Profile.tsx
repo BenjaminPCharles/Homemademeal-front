@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -9,7 +11,6 @@ import UserInput from '../../components/UserInput/UserInput';
 import Logout from '../../components/Logout/Logout';
 
 import { requestAuthorize, requestAuthGoogle } from '../../requests/userRequests';
-import { Navigate } from 'react-router-dom';
 
 
 const Warpper = styled.div `
@@ -46,6 +47,10 @@ const Info = styled.div `
 
 function Profile({userInfos, setUserInfos}: any | string ) {
 
+  const { loading, userInfo, error, success } = useSelector(
+    (state: any) => state.user
+  )
+
   const [showModifyProfile, setShowModifyProfile] = useState(true);
   const [userName, setUserName] = useState('');
 
@@ -61,15 +66,16 @@ function Profile({userInfos, setUserInfos}: any | string ) {
   }
 
   useEffect(()=> {
-    requestInfo();
+    // setUserName(userInfo.firstname)
   }, [showModifyProfile])
 
+  console.log(userInfo.firstName)
 
   return (
     <Warpper>
       <Header />
       <Info>
-        <h1>Bonjour {userName === "" ? "toi !" : userName + " !"}</h1>
+        <h1>Bonjour {userInfo.firstName === undefined ? "toi !" : userInfo.firstName + " !"}</h1>
         {/* <img src="../public/img/pp.png" alt="" /> */}
         <LinkShow text={"Modifier vos informations"} color={"078080"} setClicked={setShowModifyProfile} clicked={showModifyProfile}/>
       </Info>
@@ -79,13 +85,9 @@ function Profile({userInfos, setUserInfos}: any | string ) {
         null
       }
       <PaginationSection text={["Vos recettes favorites"]}/>
-      <Logout text={"Déconnexion"} color={"078080"} setUserInfos={setUserInfos} />
+      <Logout text={"Déconnexion"} color={"078080"} />
       <Navigation />
-
-      {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
-      
-    </Warpper>
-    
+    </Warpper>   
   )
 }
 

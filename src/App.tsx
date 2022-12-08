@@ -1,5 +1,10 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+
+import { authenticated } from './features/user/userAction';
+import { useAppDispatch } from './app/store';
 
 import Home from './views/Home/Home';
 import Signup from './views/Signup/Signup';
@@ -11,11 +16,12 @@ import Receipts from './views/Receipts/Receipts';
 import Receipt from './views/Receipt/Receipt';
 import EmailConfirm from './views/EmailConfirm/EmailConfirm';
 import LoaderGoogleAuth from './components/LoaderGoogleAuth/LoaderGoogleAuth';
-import { useEffect, useState } from 'react';
+import Loader from './components/Loader/Loader';
+
+
 
 
 import { requestAuthorize } from './requests/userRequests';
-import Loader from './components/Loader/Loader';
 
 
 const Warpper = styled.div `
@@ -29,6 +35,12 @@ const Warpper = styled.div `
 `;
 
 function App() {
+
+  const dispatch = useAppDispatch();
+
+  const { loading, userInfo, error, success } = useSelector(
+    (state: any) => state.user
+  )
 
   const [userInfos, setUserInfos] = useState({
     isConnect: "",
@@ -67,29 +79,33 @@ function App() {
   }
 
   useEffect(() => {
-    authRequest();
-    console.log(userInfos)
-  }, [])
+    // authRequest();
+    // dispatch(authenticated());
+    console.log(loading)
+  }, [success])
 
-
-  console.log(userInfos)
   
+
+  if(loading) {console.log("Checking APPPPPP")}
+    if(success) {console.log("Success APPPPPP")}
+    if(error === 'auth'){console.log("Error nAPPPPPPP")}
+
   if (userInfos.isConnect === 'checking') {console.log("Checking")}
 
   return (
     <Warpper>
-      {userInfos.isConnect === 'checking' ? <Loader /> : 
+      {loading === 'checking' ? <Loader /> : 
       <Routes>
-        <Route path="/" element={<Home userInfos={userInfos.isConnect} />} />
-        <Route path="/signup" element={<Signup userInfos={userInfos.isConnect} />} />
-        <Route path="/signin" element={<Signin userInfos={userInfos.isConnect} setUserInfos={setUserInfos}/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
         <Route path="/profile" element={<Profile userInfos={userInfos.isConnect} setUserInfos={setUserInfos} /> } />
         <Route path="/search" element={<Search userInfos={userInfos.isConnect} />} />
         <Route path="/ingredients" element={<Ingredients userInfos={userInfos.isConnect} />} />
         <Route path="/receipts" element={<Receipts userInfos={userInfos.isConnect} />} />
         <Route path="/receipt" element={<Receipt userInfos={userInfos.isConnect} />} />
         <Route path="/confirm/:id" element={<EmailConfirm />} />
-        <Route path="/test" element={<LoaderGoogleAuth />} />
+        <Route path="/google/auth" element={<LoaderGoogleAuth />} />
         {/* CREER UNE 404 */}
         {/* <Route path='*' */}
 

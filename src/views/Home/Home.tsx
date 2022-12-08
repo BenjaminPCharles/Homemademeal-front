@@ -45,7 +45,7 @@ const StyledLink = styled(Link) `
     display: contents;
 `
 
-function Home({userInfos}: any | string) {
+function Home() {
 
   return (
     <Warpper>
@@ -62,7 +62,6 @@ function Home({userInfos}: any | string) {
                 <Button text={"Inscription"} /> 
             </StyledLink>
         </BtnNav>
-        {userInfos === 'authenticated' ? ( <Navigate to='/profile' replace />) : undefined}
     </Warpper>
   )
 }

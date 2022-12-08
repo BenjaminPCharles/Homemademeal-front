@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from "react-hook-form";
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
-import { requestsLogin, requestAuthorize } from '../../requests/userRequests';
+import { userLogin } from '../../features/user/userAction';
+import { useAppDispatch } from '../../app/store';
 
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import ButtonGoogle from '../../components/ButtonGoogle/ButtonGoogle';
+
 
 
 interface SignInData {
@@ -40,42 +43,30 @@ const Warpper = styled.div `
   }
 `;
 
-function Signin({userInfos, setUserInfos}: any | string) {
 
+function Signin() {
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const { loading, userInfo, error, success } = useSelector(
+    (state: any) => state.user
+  )
+  
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const [ signInData, setSignInData ] = useState<SignInData>({
-    sendUserInfo: undefined,
-  })
 
-  const signinRequest = async(email: string, password: string) => {
-    try {
-      setUserInfos({
-        isConnect : 'checking'
-      })
-      const result = await requestsLogin(email, password);
-      if(result){
-        // const auth = await requestAuthorize();
-        // if(auth){
-          setUserInfos({
-            isConnect : 'authenticated'
-          })
-          setSignInData({
-            sendUserInfo: true,
-          });
-        } else {
-          setSignInData({
-            sendUserInfo: false,
-          });
-        // } 
-      }
-    }catch(err) {
-      console.error(err)
-    }
-  }
+  const [ messageLogin, setMessageLogin] = useState("");
 
   const onSubmit = (data: any) => {
-    signinRequest(data.email, data.password)
+    dispatch(userLogin(data))
   };
+
+  useEffect(() => {
+    // redirect user to profile page if registration was successful
+    if (success) navigate('/profile')
+    if (error === 'user') setMessageLogin("Vous devez vous inscrire ou confimer votre compte regardez dans votre boite mail");
+  }, [navigate, success])
+
 
   return (
     <Warpper>
@@ -88,11 +79,8 @@ function Signin({userInfos, setUserInfos}: any | string) {
         {errors.password && <span>Vous devez entrer un mot de passe</span>}
         <Button text={"Connection"} />
       </form>
-      {signInData.sendUserInfo === false ? <span>Vous devez vous inscrire ou confimer votre compte regardez dans votre boite mail</span> : null}
-      {/* {signInData.sendUserInfo && (
-          <Navigate to='/profile' replace />)}  */}
-      {userInfos === 'authenticated' ? ( <Navigate to='/profile' replace />) : undefined}
-    </Warpper>
+      {messageLogin !== "" ? <span>{messageLogin}</span> : null}
+      </Warpper>
   )
 }
 
