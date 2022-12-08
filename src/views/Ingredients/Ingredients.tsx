@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -46,7 +47,11 @@ const List = styled.nav `
     }
 `;
 
-function Ingredients({userInfos}: any | string){
+function Ingredients(){
+
+    const { loading, userInfo, error, success } = useSelector(
+        (state: any) => state.user
+    )
 
     const [isClicked, setIsClicked] = useState(true);
     const [addIsClicked, setAddIsClicked] = useState(true);
@@ -74,7 +79,9 @@ function Ingredients({userInfos}: any | string){
             <LinkShow clicked={addIsClicked} setClicked={setAddIsClicked} text={"Ajouter un ingrédient"} color={"078080"}/>
             {!addIsClicked ? <AddIngredient clicked={addIsClicked} setClicked={setAddIsClicked}/> : undefined}
             <Navigation />
-            {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
+            {loading === 'no-authenticated' && (
+                <Navigate to={"/"} replace={true} />
+            )}
         </Warpper>
     )
 };

@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
 
 
 const Warpper = styled.div `
@@ -46,7 +44,6 @@ const StyledLink = styled(Link) `
 `
 
 function Home() {
-
   return (
     <Warpper>
         <Title>Bienvenu</Title>

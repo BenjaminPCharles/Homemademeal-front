@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -17,7 +18,12 @@ const Warpper = styled.div `
 `;
 
 
-function Search({userInfos}: any | string){
+function Search(){
+
+    const { loading, userInfo, error, success } = useSelector(
+        (state: any) => state.user
+    )
+
     return (
         <Warpper>
             <Header />
@@ -25,7 +31,9 @@ function Search({userInfos}: any | string){
             <PaginationSection text={["Les recettes ou il manque un petit quelque chose"]}  />
             <Navigation />
 
-            {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
+           {loading === 'no-authenticated' && (
+                <Navigate to={"/"} replace={true} />
+            )}
 
         </Warpper>
     )

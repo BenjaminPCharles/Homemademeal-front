@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
@@ -41,7 +42,11 @@ const Warpper = styled.div `
 `;
 
 
-function Receipts({userInfos}: any | string){
+function Receipts(){
+    
+    const { loading, userInfo, error, success } = useSelector(
+        (state: any) => state.user
+    )
 
     const [showAddReceipt, setShowAddReceipt] = useState(true);
 
@@ -59,7 +64,9 @@ function Receipts({userInfos}: any | string){
                 <ReceiptInput clicked={showAddReceipt} setClicked={setShowAddReceipt} />
             }
             <Navigation />
-            {userInfos === 'no-authenticated' ? ( <Navigate to='/signin' replace />) : undefined}
+            {loading === 'no-authenticated' && (
+                <Navigate to={"/"} replace={true} />
+            )}
         </Warpper>
     )
 };

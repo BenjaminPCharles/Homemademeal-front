@@ -9,16 +9,15 @@ export const userLogin = createAsyncThunk<User, any>(
     'user/login',
     async (data, thunkAPI) => {
         const { email, password } = data;
-        try {
-            const response: any = await requestsLogin(email, password);
-
-            if(response === undefined){
-                return thunkAPI.rejectWithValue('user');
-            }
-            
-            return response;
-        }catch(err){
-            return thunkAPI.rejectWithValue(err);
+        const reponse = await requestsLogin(email, password);
+        if(reponse === "Logged success") {
+            console.log(reponse)
+            return reponse;
+        }else {
+            return thunkAPI.rejectWithValue({
+                status: "login",
+                message: "Vous devez vous inscrire ou confimer votre compte regardez dans votre boite mail",
+            });
         }
     }
 )
@@ -26,20 +25,6 @@ export const userLogin = createAsyncThunk<User, any>(
 export const userSignup = createAsyncThunk<UserSignup, any>(
     'user/signup',
     async (data, thunkAPI) => {
-        // const { email, password } = data;
-        
-        // try {
-        //     const response: any = await requestsAddUsers(email, password);
-
-        //     if(response){
-        //         return response
-        //     }else {
-        //         thunkAPI.rejectWithValue('email');
-        //     }
-            
-        // }catch(err){
-        //     return thunkAPI.rejectWithValue(err);
-        // }
         const { email, password, confirmPassword } = data;
         const passwordCheck = signupVerificationPassword(password, confirmPassword);
         if(passwordCheck === "Success") {
@@ -47,10 +32,16 @@ export const userSignup = createAsyncThunk<UserSignup, any>(
             if(response === "Signup success"){
                 return response;
             }else {
-                return thunkAPI.rejectWithValue("Vous êtes déjà inscrit vous pouvez vous connecter");
+                return thunkAPI.rejectWithValue({
+                    status: "signup",
+                    message: "Vous êtes déjà inscrit vous pouvez vous connecter",
+                });
             }
         }else {
-            return thunkAPI.rejectWithValue(passwordCheck);
+            return thunkAPI.rejectWithValue({
+                status: "signup",
+                message: passwordCheck,
+            });
         }
     }
 )
@@ -82,3 +73,5 @@ export const logout = createAsyncThunk(
         }
     }
 )
+
+// ADD user update action

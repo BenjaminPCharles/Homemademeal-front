@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 import { userLogin } from '../../features/user/userAction';
@@ -10,12 +10,6 @@ import { useAppDispatch } from '../../app/store';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import ButtonGoogle from '../../components/ButtonGoogle/ButtonGoogle';
-
-
-
-interface SignInData {
-  sendUserInfo: boolean | undefined;
-}
 
 const Warpper = styled.div `
   height: 100vh;
@@ -64,9 +58,7 @@ function Signin() {
   useEffect(() => {
     // redirect user to profile page if registration was successful
     if (success) navigate('/profile')
-    if (error === 'user') setMessageLogin("Vous devez vous inscrire ou confimer votre compte regardez dans votre boite mail");
-  }, [navigate, success])
-
+    }, [navigate, success])
 
   return (
     <Warpper>
@@ -79,7 +71,7 @@ function Signin() {
         {errors.password && <span>Vous devez entrer un mot de passe</span>}
         <Button text={"Connection"} />
       </form>
-      {messageLogin !== "" ? <span>{messageLogin}</span> : null}
+      {error && error.status === "login" ? <span>{error.message}</span> : null}
       </Warpper>
   )
 }

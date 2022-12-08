@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
-
-
-
+import { authenticated } from '../../features/user/userAction';
+import { useAppDispatch } from '../../app/store';
 
 function Loader(){
+
+    const dispatch = useAppDispatch();
 
     const Warpper = styled.div `
         width: 100%;
         height: 50%;
         display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     `;
     const Logo = styled.div `
         background-image: url(../img/loader.svg);
@@ -46,6 +47,11 @@ function Loader(){
         font-size: 2em;
         margin: 0 auto;
     `;
+
+
+    useEffect(() => {
+        dispatch(authenticated());
+    }, [])
 
 
     return (

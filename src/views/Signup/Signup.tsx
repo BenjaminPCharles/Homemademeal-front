@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { userSignup } from '../../features/user/userAction';
@@ -55,30 +55,20 @@ function Signup(){
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  const [ messagePassword, setMessagePassword] = useState("");
-
   const onSubmit = (data: any) => {
+    const userInfos = {
+      email: data.email.toLowerCase(),
+      password: data.password,
+      confirmPassword: data.confirmPassword
+    } as UserSignup;
 
-      // const passwordCheck = signupVerificationPassword(data.password, data.confirmPassword);
-      // if (passwordCheck === "Success"){
-        const userInfos = {
-          email: data.email.toLowerCase(),
-          password: data.password,
-          confirmPassword: data.confirmPassword
-        } as UserSignup;
-        dispatch(userSignup(userInfos)).then(() => {
-
-        });
-        // console.log(success)
-      // } else {
-      //   setMessagePassword(passwordCheck);
-      // }
+    dispatch(userSignup(userInfos)).then(() => {
+    });
   };
   
   useEffect(() => {
     // redirect user to login page if registration was successful
     if (success) navigate('/')
-    // if (error === 'email') setMessagePassword("Vous êtes déjà inscrit vous pouvez vous connecter");
   }, [navigate, success])
 
   return (
@@ -92,8 +82,7 @@ function Signup(){
         {errors.email && <span>- Vous devez entrer mail</span>}
         {errors.password && <span>- Vous devez entrer un mot de passe</span>}
         {errors.ConfirmPassword && <span>- Vous devez confirmer le mot de passe</span>}
-        {/* {messagePassword !== "" ? <span>{messagePassword}</span> : null} */}
-        {error ? <span>{error}</span> : null}
+        {error && error.status === "signup" ? <span>{error.message}</span> : null}
         <Button type={"submit"} text={"Inscription"} />
       </form>
     </Warpper>

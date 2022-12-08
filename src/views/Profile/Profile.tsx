@@ -10,9 +10,6 @@ import LinkShow from '../../components/LinkShow/LinkShow';
 import UserInput from '../../components/UserInput/UserInput';
 import Logout from '../../components/Logout/Logout';
 
-import { requestAuthorize, requestAuthGoogle } from '../../requests/userRequests';
-
-
 const Warpper = styled.div `
   width: 100vw;
   height: 100vh;
@@ -45,28 +42,17 @@ const Info = styled.div `
   }
 `;
 
-function Profile({userInfos, setUserInfos}: any | string ) {
+function Profile() {
 
   const { loading, userInfo, error, success } = useSelector(
     (state: any) => state.user
   )
 
+
   const [showModifyProfile, setShowModifyProfile] = useState(true);
   const [userName, setUserName] = useState('');
 
-  //EVITER DE CHARGER AUTH 
-
-  const requestInfo = async () => {
-    try {
-      const auth = await requestAuthorize();
-      setUserName(auth.firstName);
-    } catch(err) {
-      console.error(err);
-    }
-  }
-
   useEffect(()=> {
-    // setUserName(userInfo.firstname)
   }, [showModifyProfile])
 
   console.log(userInfo.firstName)
@@ -87,6 +73,9 @@ function Profile({userInfos, setUserInfos}: any | string ) {
       <PaginationSection text={["Vos recettes favorites"]}/>
       <Logout text={"Déconnexion"} color={"078080"} />
       <Navigation />
+      {loading === 'no-authenticated' && (
+            <Navigate to={"/"} replace={true} />
+      )}
     </Warpper>   
   )
 }
