@@ -53,7 +53,11 @@ function Profile() {
   const [userName, setUserName] = useState('');
 
   useEffect(()=> {
-  }, [showModifyProfile])
+    if(error && error.status === "update"){
+
+      setShowModifyProfile(false);
+    }
+  }, [error])
 
   console.log(userInfo.firstName)
 
@@ -65,11 +69,13 @@ function Profile() {
         {/* <img src="../public/img/pp.png" alt="" /> */}
         <LinkShow text={"Modifier vos informations"} color={"078080"} setClicked={setShowModifyProfile} clicked={showModifyProfile}/>
       </Info>
+      {/* {error && error.status === "update" ? <span>Erreur de modification</span> : null} */}
       {
         !showModifyProfile ? 
         <UserInput setClicked={setShowModifyProfile} clicked={showModifyProfile} setUserName={setUserName} /> : 
         null
       }
+      {/* {error && error.status === "update" ? setShowModifyProfile(!showModifyProfile) : null} */}
       <PaginationSection text={["Vos recettes favorites"]}/>
       <Logout text={"Déconnexion"} color={"078080"} />
       <Navigation />

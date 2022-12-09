@@ -1,9 +1,9 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { User, UserSignup } from '../../interfaces/User';
+import { User, UserSignup, UpdateInfos } from '../../interfaces/User';
 
 import { signupVerificationPassword } from '../../utils/signupVerifications';
-import { requestsLogin, requestsAddUsers, requestAuthorize, requestLogout } from '../../requests/userRequests';
+import { requestsLogin, requestsAddUsers, requestAuthorize, requestLogout, modifyUser } from '../../requests/userRequests';
 
 export const userLogin = createAsyncThunk<User, any>(
     'user/login',
@@ -75,3 +75,40 @@ export const logout = createAsyncThunk(
 )
 
 // ADD user update action
+
+export const updateUser = createAsyncThunk<UpdateInfos, any>(
+    'user/update',
+    async (data, thunkAPI) => {
+        const { firstName, secondName, password, confirmPassword, id } = data;
+        
+        if(password) {
+            const passwordCheck = signupVerificationPassword(password, confirmPassword);
+            if(passwordCheck === "Success") {
+                const response: any = await modifyUser(firstName, secondName, password, id);
+                if(response === "Update success"){
+                    return response;
+                }else {
+                    return thunkAPI.rejectWithValue({
+                        status: "update",
+                        message: "Modification de l'utilisateur impossible",
+                    });
+                }
+            }else {
+                return thunkAPI.rejectWithValue({
+                    status: "update",
+                    message: passwordCheck,
+                });
+            }
+        }else {
+            const response: any = await modifyUser(firstName, secondName, password, id);
+            if(response === "Update success"){
+                return response;
+            }else {
+                return thunkAPI.rejectWithValue({
+                    status: "update",
+                    message: "Modification de l'utilisateur impossible",
+                });
+            }
+        }
+    }
+)

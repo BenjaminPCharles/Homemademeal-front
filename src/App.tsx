@@ -14,6 +14,10 @@ import EmailConfirm from './views/EmailConfirm/EmailConfirm';
 import LoaderGoogleAuth from './components/LoaderGoogleAuth/LoaderGoogleAuth';
 import Loader from './components/Loader/Loader';
 
+import { authenticated } from './features/user/userAction';
+import { useAppDispatch } from './app/store';
+import { useEffect } from 'react';
+
 const Warpper = styled.div `
   width: 100vw;
   height: 100vh;
@@ -25,10 +29,15 @@ const Warpper = styled.div `
 `;
 
 function App() {
+  const dispatch = useAppDispatch();
 
   const { loading, userInfo, error, success } = useSelector(
     (state: any) => state.user
   )
+
+  useEffect(() => {
+    dispatch(authenticated());
+}, [success])
 
   return (
     <Warpper>

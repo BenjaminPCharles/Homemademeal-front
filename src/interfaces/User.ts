@@ -8,3 +8,12 @@ export interface UserSignup {
     password: string;
     confirmPassword: string;
 }
+
+
+export interface UpdateInfos {
+    firstName: string;
+    secondName: string;
+    password: string;
+    confirmPassword: string;
+    id: number;
+}

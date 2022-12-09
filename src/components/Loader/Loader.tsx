@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { authenticated } from '../../features/user/userAction';
-import { useAppDispatch } from '../../app/store';
+// import { authenticated } from '../../features/user/userAction';
+// import { useAppDispatch } from '../../app/store';
 
 function Loader(){
 
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     const Warpper = styled.div `
         width: 100%;
@@ -49,9 +49,9 @@ function Loader(){
     `;
 
 
-    useEffect(() => {
-        dispatch(authenticated());
-    }, [])
+    // useEffect(() => {
+    //     dispatch(authenticated());
+    // }, [])
 
 
     return (
