@@ -41,8 +41,8 @@ function EmailConfirm() {
 
     const requestConfirm = async(id: string) => {
         try {
-            const replaceByDots: string = id.replace(/\-/g,'.')
-            const result = await requestsConfirmEmail(replaceByDots)
+            // const replaceByDots: string = id.replace(/\-/g,'.')
+            const result = await requestsConfirmEmail(id)
             if(result) {
                 setUserConfirm({
                     userIdToConfirm: true,

@@ -1,6 +1,7 @@
 export interface User { 
     _id?: number;
     firstName: string;
+    googleAuth: boolean;
 }
 
 export interface UserSignup { 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Button from '../../components/Button/Button';
 
@@ -44,6 +45,11 @@ const StyledLink = styled(Link) `
 `
 
 function Home() {
+
+    const { loading, userInfo, error, success } = useSelector(
+        (state: any) => state.user
+    )
+
   return (
     <Warpper>
         <Title>Bienvenu</Title>
@@ -59,6 +65,9 @@ function Home() {
                 <Button text={"Inscription"} /> 
             </StyledLink>
         </BtnNav>
+        {loading === 'authenticated' && (
+            <Navigate to={"/profile"} replace={true} />
+      )}
     </Warpper>
   )
 }

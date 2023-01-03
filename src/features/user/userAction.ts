@@ -66,7 +66,8 @@ export const logout = createAsyncThunk(
 
         if(response === "Logout"){
             return {
-                firstName: ""
+                firstName: "",
+                googleAuth: false
             }
         }else {
             return thunkAPI.rejectWithValue("logout");
@@ -74,7 +75,6 @@ export const logout = createAsyncThunk(
     }
 )
 
-// ADD user update action
 
 export const updateUser = createAsyncThunk<UpdateInfos, any>(
     'user/update',

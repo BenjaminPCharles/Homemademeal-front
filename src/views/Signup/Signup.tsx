@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { userSignup } from '../../features/user/userAction';
-import { useAppDispatch } from '../../app/store';
-import { UserSignup } from '../../interfaces/User';
+import { userSignup } from "../../features/user/userAction";
+import { useAppDispatch } from "../../app/store";
+import { UserSignup } from "../../interfaces/User";
 
-import { signupVerificationPassword } from '../../utils/signupVerifications';
+import Header from "../../components/Header/Header";
+import Button from "../../components/Button/Button";
+import ButtonGoogle from "../../components/ButtonGoogle/ButtonGoogle";
+import ConfirmationSignup from "../../components/ConfirmationSignup/ConfirmationSignup";
 
-import Header from '../../components/Header/Header';
-import Button from '../../components/Button/Button';
-import ButtonGoogle from '../../components/ButtonGoogle/ButtonGoogle';
-
-
-const Warpper = styled.div `
+const Warpper = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -34,59 +32,80 @@ const Warpper = styled.div `
     border: solid 3px #232323;
     border-radius: 25px;
     padding: 0.8em 6.1em 0.5em 1em;
-    margin: .5em 0;
+    margin: 0.5em 0;
   }
   span {
     color: #f45d48;
     max-width: 80%;
     text-align: justify;
-    font-size: 1.1em
+    font-size: 1.1em;
   }
 `;
 
-function Signup(){
-
+function Signup() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { loading, userInfo, error, success } = useSelector(
     (state: any) => state.user
-  )
+  );
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data: any) => {
     const userInfos = {
       email: data.email.toLowerCase(),
       password: data.password,
-      confirmPassword: data.confirmPassword
+      confirmPassword: data.confirmPassword,
     } as UserSignup;
 
-    dispatch(userSignup(userInfos)).then(() => {
-    });
+    dispatch(userSignup(userInfos)).then(() => {});
   };
-  
+
   useEffect(() => {
     // redirect user to login page if registration was successful
-    if (success) navigate('/')
-  }, [navigate, success])
+    // if (success) navigate('/')
+  }, [navigate, success]);
 
   return (
     <Warpper>
       <Header />
-      <ButtonGoogle text={"Inscription"}/>
+      <ButtonGoogle text={"Inscription"} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="email" placeholder='Mail' {...register("email", {required: true})} />
-        <input type="password" placeholder='Mot de passe' minLength={8} {...register("password", {required: true})}/>
-        <input type="password"  placeholder='Confirmation de mot de passe' {...register("confirmPassword", {required: true})} />
+        <input
+          type="email"
+          placeholder="Mail"
+          {...register("email", { required: true })}
+        />
+        <input
+          type="password"
+          placeholder="Mot de passe"
+          minLength={8}
+          {...register("password", { required: true })}
+        />
+        <input
+          type="password"
+          placeholder="Confirmation de mot de passe"
+          {...register("confirmPassword", { required: true })}
+        />
         {errors.email && <span>- Vous devez entrer mail</span>}
         {errors.password && <span>- Vous devez entrer un mot de passe</span>}
-        {errors.ConfirmPassword && <span>- Vous devez confirmer le mot de passe</span>}
-        {error && error.status === "signup" ? <span>{error.message}</span> : null}
+        {errors.ConfirmPassword && (
+          <span>- Vous devez confirmer le mot de passe</span>
+        )}
+        {error && error.status === "signup" ? (
+          <span>{error.message}</span>
+        ) : null}
         <Button type={"submit"} text={"Inscription"} />
       </form>
+      {success === "Signup success" ? <ConfirmationSignup /> : null}
     </Warpper>
-  )
+  );
 }
 
 export default React.memo(Signup);

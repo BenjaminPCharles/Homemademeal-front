@@ -18,6 +18,8 @@ import { authenticated } from './features/user/userAction';
 import { useAppDispatch } from './app/store';
 import { useEffect } from 'react';
 
+import { getAllReceipts } from './features/receipt/receiptAction';
+
 const Warpper = styled.div `
   width: 100vw;
   height: 100vh;
@@ -34,6 +36,8 @@ function App() {
   const { loading, userInfo, error, success } = useSelector(
     (state: any) => state.user
   )
+
+  // QUAND USE IS LOGGED ALORS : SES INFOS, SES RECETTES( fav et autre ), SES INGREDIENTS et LES RECTTES DE L'APPLICATION
 
   useEffect(() => {
     dispatch(authenticated());

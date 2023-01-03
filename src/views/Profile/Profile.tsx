@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
+import { getAllReceipts } from '../../features/receipt/receiptAction';
+import { useAppDispatch } from '../../app/store';
+
 import Header from '../../components/Header/Header';
 import Navigation from '../../components/Navigation/Navigation';
 import PaginationSection from '../../components/PaginationSection/PaginationSection';
@@ -44,8 +47,13 @@ const Info = styled.div `
 
 function Profile() {
 
-  const { loading, userInfo, error, success } = useSelector(
-    (state: any) => state.user
+  // const { loading, userInfo, error, success } = useSelector(
+  //   (state: any) => state.user
+  // )
+  const dispatch = useAppDispatch();
+    
+  const { user, receipt } = useSelector(
+      (state: any) => state
   )
 
 
@@ -53,33 +61,34 @@ function Profile() {
   const [userName, setUserName] = useState('');
 
   useEffect(()=> {
-    if(error && error.status === "update"){
-
+    dispatch(getAllReceipts(user.userInfo.id))
+    if(user.error && user.error.status === "update"){
       setShowModifyProfile(false);
     }
-  }, [error])
+  }, [user.error])
 
-  console.log(userInfo.firstName)
+  console.log(user.userInfo.firstName)
 
   return (
     <Warpper>
       <Header />
       <Info>
-        <h1>Bonjour {userInfo.firstName === undefined ? "toi !" : userInfo.firstName + " !"}</h1>
+        <h1>Bonjour {user.userInfo.firstName === undefined ? "toi !" : user.userInfo.firstName + " !"}</h1>
         {/* <img src="../public/img/pp.png" alt="" /> */}
-        <LinkShow text={"Modifier vos informations"} color={"078080"} setClicked={setShowModifyProfile} clicked={showModifyProfile}/>
+        {user.userInfo.googleAuth ? null : <LinkShow text={"Modifier vos informations"} color={"078080"} setClicked={setShowModifyProfile} clicked={showModifyProfile}/>}
+       
       </Info>
-      {/* {error && error.status === "update" ? <span>Erreur de modification</span> : null} */}
+      
       {
         !showModifyProfile ? 
         <UserInput setClicked={setShowModifyProfile} clicked={showModifyProfile} setUserName={setUserName} /> : 
         null
       }
-      {/* {error && error.status === "update" ? setShowModifyProfile(!showModifyProfile) : null} */}
+     
       <PaginationSection text={["Vos recettes favorites"]}/>
       <Logout text={"Déconnexion"} color={"078080"} />
       <Navigation />
-      {loading === 'no-authenticated' && (
+      {user.loading === 'no-authenticated' && (
             <Navigate to={"/"} replace={true} />
       )}
     </Warpper>   

@@ -59,98 +59,35 @@ function UserInput({setClicked, clicked}: any | boolean) {
     (state: any) => state.user
   )
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    // const [updateData, setUpdateData] = useState<upDataUserData>({
-    //     securePassword: undefined,
-    //     confirmPassword: undefined,
-    //     sendUserInfo: undefined,
-    // })
-
-    // const requestModifyUser = async (firstName: string, secondName: string, password: string) => {
-    //     try {
-    //         const resultAuth = await requestAuthorize();
-    //         if (resultAuth) {
-    //             const result = await modifyUser(firstName, secondName, password, resultAuth.id)
-    //             if(result){
-    //                 setUpdateData({
-    //                   securePassword: true,
-    //                   confirmPassword: true,
-    //                   sendUserInfo: true,
-    //                 });
-    //               } else {
-    //                 setUpdateData({
-    //                   securePassword: true,
-    //                   confirmPassword: true,
-    //                   sendUserInfo: false,
-    //                 });
-    //               }
-    //         }
-    //     }catch(err){
-    //         console.error(err)
-    //     }
-    // }
-
-    const onSubmit = async (data: any) => {
-        // const passwordSpecialCaractere: RegExp = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-]).{8,}$') ;
-
-        // // Check if password contain : uppercase, lowercase, number and special character
-        // if(passwordSpecialCaractere.test(data.password) || data.password === ""){
-        //     setUpdateData({
-        //         securePassword: true,
-        //         confirmPassword: false,
-        //         sendUserInfo: undefined,
-        //     })
-        //   console.log("regex ok")
-        //   // Check if password is equal to confirmPassword
-        //   if(data.password === data.confirmPassword){
-        //     setUpdateData({
-        //       securePassword: true,
-        //       confirmPassword: true,
-        //       sendUserInfo: undefined,
-        //     })
-        //     console.log("confirm ok")
-        //     // CALL secure 
-        //     requestModifyUser(data.firstName, data.secondName, data.password)
-        //   } else {
-        //     setUpdateData({
-        //       securePassword: true,
-        //       confirmPassword: false,
-        //       sendUserInfo: undefined,
-        //     })
-        //   }
-        // } else {
-        //     setUpdateData({
-        //     securePassword: false,
-        //     confirmPassword: false,
-        //     sendUserInfo: undefined,
-        //   })
-        // }
-        const userInfos = {
-          firstName: data.firstName,
-          secondName: data.secondName,
-          password: data.password,
-          confirmPassword: data.confirmPassword,
-          id: userInfo.id
-        } as UpdateInfos;
+  const onSubmit = async (data: any) => {
     
-        dispatch(updateUser(userInfos)).then(() => {
-        });
-    }
+    const userInfos = {
+      firstName: data.firstName,
+      secondName: data.secondName,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      id: userInfo.id
+    } as UpdateInfos;
 
-    return (
-        <Warpper onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" placeholder='Prenom' {...register("firstName")} />
-            <input type="text" placeholder='Nom' {...register("secondName")} />
-            <input type="password" placeholder='Mot de passe' minLength={8} {...register("password")}/>
-            <input type="password"  placeholder='Confirmation de mot de passe' {...register("confirmPassword")} />
-            {/* {updateData.securePassword === false ? <span>- Le mot de passe doit contenir au moins une majuscule une minuscule un nombre et un caractére spécial</span> : null}
-            {updateData.confirmPassword === false ? <span>- Le mot de passe doit être le même que la confirmation de mot de passe</span> : null} */}
-            <Button text={"Modifier le profil"} />
-            {error && error.status === "update" ? <span>{error.message}</span> : null}
-            <LinkShow text={"Retour"} setClicked={setClicked} clicked={clicked}/>
-        </Warpper>
-    )
+    dispatch(updateUser(userInfos)).then(() => {
+    });
+  }
+
+  return (
+    <Warpper onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder='Prenom' {...register("firstName")} />
+        <input type="text" placeholder='Nom' {...register("secondName")} />
+        <input type="password" placeholder='Mot de passe' minLength={8} {...register("password")}/>
+        <input type="password"  placeholder='Confirmation de mot de passe' {...register("confirmPassword")} />
+        {/* {updateData.securePassword === false ? <span>- Le mot de passe doit contenir au moins une majuscule une minuscule un nombre et un caractére spécial</span> : null}
+        {updateData.confirmPassword === false ? <span>- Le mot de passe doit être le même que la confirmation de mot de passe</span> : null} */}
+        <Button text={"Modifier le profil"} />
+        {error && error.status === "update" ? <span>{error.message}</span> : null}
+        <LinkShow text={"Retour"} setClicked={setClicked} clicked={clicked}/>
+    </Warpper>
+  )
 }
 
 export default React.memo(UserInput);
